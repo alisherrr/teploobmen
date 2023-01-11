@@ -1,0 +1,14 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<form action="/Login/" method="post">
+    E-mail:
+    <input name="Email" value="" autocomplete="off" />
+
+    Пароль:
+    <input name="Password" value="" autocomplete="off" />
+
+    <button type="submit">Войти</button>
+</form>

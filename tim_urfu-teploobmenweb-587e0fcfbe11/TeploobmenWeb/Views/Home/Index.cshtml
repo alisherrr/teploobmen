@@ -1,0 +1,90 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (!string.IsNullOrEmpty(TempData["message"]?.ToString()))
+{
+    <div class="alert alert-danger">
+        @TempData["message"]
+    </div>
+}
+
+
+<form action="/Home/Result" method="post">
+    <p>
+        Начальная температура материала, 0С:
+    <input name="InitTemperatureMaterial" value="@Model.Variant?.InitTemperatureMaterial" autocomplete="off"  />
+    </p>
+    <p>
+        Начальная температура газа, 0С: 
+    <input name="InitTemperatureGas" value="@Model.Variant?.InitTemperatureGas" autocomplete="off" />
+    </p>
+    <p>
+        Скорость газа на свободное сечение шахты, м/с: 
+    <input name="SpeedGas" value="@Model.Variant?.SpeedGas" autocomplete="off" />
+    </p>
+    <p>
+        Средняя теплоемкость газа,кДж: 
+    <input name="MiddleHeatСapacity" value="@Model.Variant?.MiddleHeatСapacity" autocomplete="off" />
+    </p>
+    <p>
+        Расход материалов, кг/с: 
+    <input name="ConsumptionMaterial" value="@Model.Variant?.ConsumptionMaterial" autocomplete="off" />
+    </p>
+    <p>
+        Теплоемкость материалов, кДж:
+    <input name="HeatСapacityMaterial" value="@Model.Variant?.HeatСapacityMaterial" autocomplete="off" />
+    </p>
+    <p>
+        Объемный коэффициент теплоотдачи, Вт: 
+    <input name="VolumetricHeatTransferCoefficient" value="@Model.Variant?.VolumetricHeatTransferCoefficient" autocomplete="off" />
+    </p>
+    <p>
+        Диаметр аппарата, м: 
+        <input name="ApparatusDiameter" value="@Model.Variant?.ApparatusDiameter" autocomplete="off" />
+    </p>
+    <p>
+        Имя:
+    <input name="Name" value="@Model.Variant?.Name" autocomplete="off" />
+    </p>
+
+    <button type="submit">Рассчитать</button>
+</form>
+
+<h2>Варианты расчетов</h2>
+<table class="table table-border">
+    <tr>
+        <td>Название варианта</td>
+        <td>InitTemperatureMaterial</td>
+        <td>InitTemperatureGas</td>
+        <td>SpeedGas</td>
+        <td>MiddleHeatСapacity</td>
+        <td>ConsumptionMaterial</td>
+        <td>HeatСapacityMaterial</td>
+        <td>VolumetricHeatTransferCoefficient</td>
+        <td>ApparatusDiameter</td>
+        <td></td>
+    </tr>
+
+    @foreach (var variant in Model.Variants)
+    {
+        <tr>
+            <td>@variant.Name</td>
+            <td>@variant.InitTemperatureMaterial</td>
+            <td>@variant.InitTemperatureGas</td>
+            <td>@variant.SpeedGas</td>
+            <td>@variant.MiddleHeatСapacity</td>
+            <td>@variant.ConsumptionMaterial</td>
+            <td>@variant.HeatСapacityMaterial</td>
+            <td>@variant.VolumetricHeatTransferCoefficient</td>
+            <td>@variant.ApparatusDiameter</td>
+            <td>
+                <a href="/Home/Index/?variantId=@variant.Id">Открыть</a>
+                 <a href="/Home/Remove/?variantId=@variant.Id">Удалить</a>
+            </td>
+        </tr>
+
+    }
+</table>
+

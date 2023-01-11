@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeploobmenWeb", "TeploobmenWeb\TeploobmenWeb.csproj", "{06EF55E9-C951-42FD-ADF5-AAC77E5CAC7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeploobmenLibrary", "TeploobmenLibrary\TeploobmenLibrary.csproj", "{B7A76EA3-4167-49F2-ACFF-F0DFA601CD6D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{06EF55E9-C951-42FD-ADF5-AAC77E5CAC7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06EF55E9-C951-42FD-ADF5-AAC77E5CAC7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06EF55E9-C951-42FD-ADF5-AAC77E5CAC7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06EF55E9-C951-42FD-ADF5-AAC77E5CAC7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7A76EA3-4167-49F2-ACFF-F0DFA601CD6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7A76EA3-4167-49F2-ACFF-F0DFA601CD6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7A76EA3-4167-49F2-ACFF-F0DFA601CD6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7A76EA3-4167-49F2-ACFF-F0DFA601CD6D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CB7F3E96-ACDD-46F7-80AC-0481BC41CE54}
+	EndGlobalSection
+EndGlobal

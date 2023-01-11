@@ -1,0 +1,206 @@
+﻿@model TeploobmenOutput
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<form method="post">
+    <p>
+        Начальная температура материала, 0С:
+        <input name="InitTemperatureMaterial" />
+    </p>
+    <p>
+        Начальная температура газа, 0С: 
+        <input name="InitTemperatureGas"  />
+    </p>
+    <p>
+        Скорость газа на свободное сечение шахты, м/с: 
+        <input name="SpeedGas" />
+    </p>
+    <p>
+        Средняя теплоемкость газа,кДж: 
+        <input name="MiddleHeatСapacity"/>
+    </p>
+    <p>
+        Теплоемкость материалов, кДж: 
+        <input name="ConsumptionMaterial" />
+    </p>
+    <p>
+        Расход материалов, кг/с: 
+        <input name="HeatСapacityMaterial" />
+    </p>
+    <p>
+        Объемный коэффициент теплоотдачи, Вт: 
+        <input name="VolumetricHeatTransferCoefficient"/>
+    </p>
+    <p>
+        Диаметр аппарата, м: 
+        <input name="ApparatusDiameter"/>
+    </p>
+    <button type="submit">Рассчитать</button>
+</form>
+
+@if(Model != null)
+{
+    <table class="table">
+        <tr>
+            <td>Y</td>
+            @for (int i = 0; i < Model.Rows.Count; i++)
+            {
+                <td>@Model.Rows[i].Y</td>
+            }
+        </tr>
+        <tr>
+            <td>RelativeHeight</td>
+            @for (int i = 0; i < Model.Rows.Count; i++)
+            {
+                <td>@Model.Rows[i].RelativeHeight</td>
+            }
+        </tr>
+        <tr>
+            <td>Intermediate1</td>
+            @for (int i = 0; i < Model.Rows.Count; i++)
+            {
+                <td>@Model.Rows[i].Intermediate1</td>
+            }
+        </tr>
+        <tr>
+            <td>Intermediate2</td>
+            @for (int i = 0; i < Model.Rows.Count; i++)
+            {
+                <td>@Model.Rows[i].Intermediate2</td>
+            }
+        </tr>
+        <tr>
+            <td>V</td>
+            @for (int i = 0; i < Model.Rows.Count; i++)
+            {
+                <td>@Model.Rows[i].V</td>
+            }
+        </tr>
+        <tr>
+            <td>RelativeTempGas</td>
+            @for (int i = 0; i < Model.Rows.Count; i++)
+            {
+                <td>@Model.Rows[i].RelativeTempGas</td>
+            }
+        </tr>
+        <tr>
+            <td>temp</td>
+            @for (int i = 0; i < Model.Rows.Count; i++)
+            {
+                <td>@Model.Rows[i].temp</td>
+            }
+        </tr>
+        <tr>
+            <td>Temp</td>
+            @for (int i = 0; i < Model.Rows.Count; i++)
+            {
+                <td>@Model.Rows[i].Temp</td>
+            }
+        </tr>
+        <tr>
+            <td>Difference</td>
+            @for (int i = 0; i < Model.Rows.Count; i++)
+            {
+                <td>@Model.Rows[i].Difference</td>
+            }
+        </tr>
+    </table>
+
+    <table class="table">
+        <tr>
+            <td>Y</td>
+            <td>RelativeHeight</td>
+            <td>Intermediate1</td>
+            <td>Intermediate2</td>
+            <td>V</td>
+            <td>RelativeTempGas</td>
+            <td>temp</td>
+            <td>Temp</td>
+            <td>Difference</td>
+        </tr>
+        @foreach(var row in Model.Rows)
+        {
+            <tr>
+                <td>@row.Y</td>
+                <td>@row.RelativeHeight</td>
+                <td>@row.Intermediate1</td>
+                <td>@row.Intermediate2</td>
+                <td>@row.V</td>
+                <td>@row.RelativeTempGas</td>
+                <td>@row.temp</td>
+                <td>@row.Temp</td>
+                <td>@row.Difference</td>
+            </tr>
+        }
+    </table>
+    <div>
+        <canvas id="Chart1"></canvas>
+        <canvas id="Chart2"></canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx1 = document.getElementById('Chart1');
+        const data = {
+            labels: @Json.Serialize(Model.Rows.Select(x => x.Y).ToList()),
+            datasets: [
+                {
+                    label: 't',
+                    data: @Json.Serialize(Model.Rows.Select(x => x.temp).ToList()),
+
+                },
+                {
+                    label: 'T',
+                    data: @Json.Serialize(Model.Rows.Select(x => x.Temp).ToList()),
+
+                }
+            ]
+        };
+        const ctx2 = document.getElementById('Chart2');
+        const data2 = {
+            labels: @Json.Serialize(Model.Rows.Select(x => x.Y).ToList()),
+            datasets: [
+                {
+                    label: 'temp',
+                    data: @Json.Serialize(Model.Rows.Select(x => x.Difference).ToList()),
+
+                },
+            ]
+        };
+        const configLine1 = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Изменение температуры окатышей и газа по высоте слоя'
+                    }
+                }
+            },
+        };
+        const configLine2 = {
+            type: 'line',
+            data: data2,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Разность температур окатышей и газа'
+                    }
+                }
+            },
+        };
+        new Chart(ctx1, configLine1);
+        new Chart(ctx2, configLine2)
+    </script>
+    
+}
